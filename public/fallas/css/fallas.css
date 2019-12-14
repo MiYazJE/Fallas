@@ -1,0 +1,101 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+* {
+  margin: 0;
+  padding: 0; }
+
+.btnMostrarFallas, main #contenedorFallas .falla .btnUbicacion, input[name="inputFalla"] {
+  border-radius: 5px;
+  outline: 0;
+  border: 1px solid black;
+  padding: 5px 20px 5px 20px;
+  text-align: center; }
+
+.btnMostrarFallas, main #contenedorFallas .falla .btnUbicacion {
+  cursor: pointer;
+  background-color: lightcoral;
+  transition-property: background-color;
+  transition-duration: 1s; }
+  .btnMostrarFallas:active, main #contenedorFallas .falla .btnUbicacion:active {
+    transform: translateY(2px); }
+  .btnMostrarFallas:hover, main #contenedorFallas .falla .btnUbicacion:hover {
+    background-color: lightsalmon; }
+
+main, main #form, main #contenedorFallas, main #contenedorFallas .falla, .infoFalla {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap; }
+
+* {
+  font-family: 'Montserrat', sans-serif; }
+
+main {
+  flex-direction: column;
+  margin-top: 50px;
+  width: 100%;
+  position: absolute;
+  z-index: 10; }
+  main #form {
+    flex-direction: column;
+    width: 50%; }
+    main #form * {
+      margin: 10px; }
+    main #form .inputsForm {
+      width: 100%;
+      text-align: center; }
+  main #contenedorFallas {
+    margin-top: 50px;
+    width: 100%; }
+    main #contenedorFallas .falla {
+      flex-direction: column;
+      padding: 20px;
+      box-shadow: 4px 8px 12px -1px rgba(0, 0, 0, 0.75);
+      margin: 10px;
+      min-width: 200px; }
+      main #contenedorFallas .falla img {
+        width: 250px;
+        height: 300px; }
+      main #contenedorFallas .falla * {
+        margin: 5px; }
+
+#contenedorMapa {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  transition-property: opacity;
+  transition-duration: 1s;
+  opacity: 0;
+  z-index: -1; }
+  #contenedorMapa #myMap {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    top: 25%;
+    left: 25%; }
+
+.infoFalla {
+  text-align: center; }
+  .infoFalla img {
+    width: 50px;
+    height: 50px; }
+
+.star-rating {
+  display: inline-block; }
+  .star-rating span {
+    float: right;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    font-size: 25px;
+    color: #95A5A6;
+    text-decoration: none;
+    text-align: center;
+    transition: color .3s;
+    cursor: pointer; }
+    .star-rating span:hover {
+      color: #F39C12; }
+      .star-rating span:hover ~ span {
+        color: #F39C12; }

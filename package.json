@@ -1,0 +1,28 @@
+{
+  "name": "mongo-fallero",
+  "version": "1.0.0",
+  "description": "Aplicación para ver las fallas y puntuarlas",
+  "main": "server.js",
+  "scripts": {
+    "scss": "node-sass --watch scss -o \"public/fallas/css/\"",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MiYazJE/DAW-DIW.git"
+  },
+  "author": "Rubén Saiz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MiYazJE/DAW-DIW/issues"
+  },
+  "homepage": "https://github.com/MiYazJE/DAW-DIW#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.4.0",
+    "mongoose": "^5.8.0",
+    "node-sass": "^4.13.0",
+    "nodemon": "^2.0.2"
+  }
+}

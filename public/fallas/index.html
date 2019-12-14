@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Fallas Valencia</title>
+    <style>
+        @import url("css/fallas.css");
+    </style>
+
+    <!-- CSS Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin="" />
+
+    <!-- JS Leaflet -->
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+
+    <!-- Proj4js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.6.0/proj4.js"></script>
+
+    <!-- Local JS -->
+    <script defer src="js/main.js" type="module"></script>
+</head>
+
+<body>
+
+    <main>
+        <div id="form">
+            <select class="comboRegiones inputsForm">
+                <option value="all">Todas</option>
+            </select>
+            <input class="anyoDesde inputsForm" type="number">
+            <input class="anyoHasta inputsForm" type="number">
+            <div>
+                Principal <input class="radioFallaPrincipal" type="checkbox"> <br />
+                Infantil <input class="radioFallaInfantil" type="checkbox">
+            </div>
+            <input class="buscadorFalla inputsForm" type="text" placeholder="Busca por nombre...">
+        </div>
+        <div id="contenedorFallas">
+
+        </div>
+    </main>
+
+    <div id="contenedorMapa">
+        <div id="myMap"></div>
+    </div>
+
+</body>
+
+</html>

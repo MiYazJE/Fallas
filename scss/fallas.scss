@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+$box-shadow-falla: 4px 8px 12px -1px rgba(0,0,0,0.75);;
+
+%cleanMargins {
+    margin: 0;
+    padding: 0;
+}
+
+%estilosInput {
+    border-radius: 5px;
+    outline: 0;
+    border: 1px solid black;
+    padding: 5px 20px 5px 20px;
+    text-align: center;
+}
+
+%estilosBotones {
+
+    @extend %estilosInput;
+
+    cursor: pointer;
+    background-color: lightcoral;
+    transition-property: background-color;
+    transition-duration: 1s;
+
+    &:active {
+        transform: translateY(2px);
+    }
+
+    &:hover {
+        background-color: lightsalmon;
+    }
+}
+
+%display-flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+* {
+    @extend %cleanMargins;
+    font-family: 'Montserrat', sans-serif;;
+}
+
+input[name="inputFalla"] {
+    @extend %estilosInput;
+}
+
+.btnMostrarFallas {
+    @extend %estilosBotones;
+}
+
+main {
+
+    @extend %display-flex-center;
+    flex-direction: column;
+    margin-top: 50px;
+    width: 100%;
+    position: absolute;
+    z-index: 10;
+
+    #form {
+
+        @extend %display-flex-center;
+        flex-direction: column;
+        width: 50%;
+        
+        * {
+            margin: 10px;
+        }
+    
+        .inputsForm {
+            width: 100%;
+            text-align: center;
+        }
+    
+    }
+
+    #contenedorFallas {
+
+        @extend %display-flex-center;
+        margin-top: 50px;
+        width: 100%;
+
+        .falla {
+
+            @extend %display-flex-center;
+            flex-direction: column;
+            padding: 20px;
+            box-shadow: $box-shadow-falla;
+            margin: 10px;
+            min-width: 200px;
+
+            img {
+                width: 250px;
+                height: 300px;
+            }
+
+            * {
+                margin: 5px;
+            }
+
+            .btnUbicacion {
+                @extend %estilosBotones;
+            }
+
+        }
+
+    }
+
+}
+
+#contenedorMapa {
+
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.75);
+    transition-property: opacity;
+    transition-duration: 1s;
+    opacity: 0;
+    z-index: -1;
+
+    #myMap {
+        position: absolute;
+        width: 50%;
+        height: 50%;
+        top: 25%;
+        left: 25%;
+    }
+
+}
+
+.infoFalla {
+    
+    @extend %display-flex-center;
+    text-align: center;
+
+    img {
+        width: 50px;
+        height: 50px;
+    }
+
+}
+
+.star-rating {
+
+    $selected: #F39C12;
+    $size: 25px;
+    $normal: #95A5A6;
+    
+    display: inline-block;
+    
+    span {
+    
+        float: right;
+        width: $size;
+        height: $size;
+        line-height: $size;
+        font-size: $size;
+        color: $normal;
+        text-decoration: none;
+        text-align: center;
+        transition: color .3s;
+        cursor: pointer;
+      
+        &:hover {
+
+            color: $selected;           
+            
+            & ~ span {
+                color: $selected;
+            }
+        }
+    }
+  
+}
