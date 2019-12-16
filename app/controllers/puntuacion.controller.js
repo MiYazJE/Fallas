@@ -26,10 +26,23 @@ exports.findSome = (req, res) => {
     
 }
 
+// update puntuacion
+exports.update = (req, res) => {
+
+    let filter = { _id: req.params.puntuacionId }
+    let change = { puntuacion: req.body.puntuacion } 
+
+    Puntuacion.updateOne(filter, change)
+        .then(status => res.status(200).send(status))
+        .catch(err => res.status(400).send({
+            message: err.message || 'Problems ocurred'
+        }))
+}
+
 // create and save
 exports.create = (req, res) => {
 
-    // validate puntuacion
+    // validate body
     if (!req.body) {
         console.log(req.body);
         return res.status(400).send({
@@ -37,22 +50,23 @@ exports.create = (req, res) => {
         });
     }
 
+    // Validate if the object is right
     if (!req.body.idFalla || !req.body.puntuacion || !req.body.ip) {
-        return res.send({
+        return res.status(400).send({
             message: 'bad parameters'
         })
     }
 
-    // Create the object
+    // Create the puntuation object
     const puntuacion = new Puntuacion({
-        idFalla: req.body.idFalla || "idFallaVacio",
-        ip: req.body.ip || "127.0.0.1",
-        puntuacion: req.body.puntuacion || 42
+        idFalla: req.body.idFalla,
+        ip: req.body.ip,
+        puntuacion: req.body.puntuacion
     })
 
     // Save the object
     puntuacion.save()
-        .then(data => res.send(data))
+        .then(data => res.status(200).send(data))
         .catch(err => {
             res.status(500).send({
                 message: err.message || "Something was wrong creating puntuacion"

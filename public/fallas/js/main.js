@@ -3,14 +3,12 @@ import Mapa from './mapa.js';
 import HTTPMethods from './httpMethods.js';
 import StarRating from './starRating.js';
 
-const getAllData = () => httpMethods.getPuntuaciones();
-
 const creacionEventoBusqueda = () => {
     document.querySelector('.buscadorFalla').onchange = cargarFallas;
 }
 
 const abrirUbicacion = (btn) => {
-    
+
     let idFalla = btn.getAttribute('idFalla');
     let falla = mapFallas.get(idFalla);
 
@@ -40,7 +38,7 @@ const abrirUbicacion = (btn) => {
 
     // Esconder el contenedor del mapa
     contenedorMapa.addEventListener('transitionend', () => {
-        if (contenedorMapa.style.opacity === '0') 
+        if (contenedorMapa.style.opacity === '0')
             contenedorMapa.style.zIndex = -1;
     });
 
@@ -49,10 +47,10 @@ const abrirUbicacion = (btn) => {
 const creacionEventosTipoFalla = () => {
 
     const radioFallaPrincipal = document.querySelector('.radioFallaPrincipal');
-    const radioFallaInfantil  = document.querySelector('.radioFallaInfantil');
+    const radioFallaInfantil = document.querySelector('.radioFallaInfantil');
 
     radioFallaPrincipal.onchange = cargarFallas;
-    radioFallaInfantil.onchange  = cargarFallas;
+    radioFallaInfantil.onchange = cargarFallas;
 }
 
 const insertarFalla = (nombreFalla, srcFoto, anyoFundada, tipoFalla, artista, id) => {
@@ -64,7 +62,7 @@ const insertarFalla = (nombreFalla, srcFoto, anyoFundada, tipoFalla, artista, id
             <p>Año fundada: ${anyoFundada}</p>
             <p>Falla ${tipoFalla}</p>
             <button idfalla="${id}" class="btnUbicacion">Ubicación</button>
-            ${new StarRating().getHTML(id)}
+            ${starRating.getHTML(id)}
         </div>`;
 }
 
@@ -89,17 +87,20 @@ const getMinAndMaxYear = () => {
 const generarHtmlFallas = (fallasFiltradas, radioFallaPrincipal, radioFallaInfantil) => {
 
     let contenedor = '';
-    
+
     fallasFiltradas.map(falla => {
+
         if (radioFallaPrincipal.checked) {
             let artista = (falla.artista.length != 0) ? `Artista: ${falla.artista}` : 'Artista desconocido';
             contenedor += insertarFalla(falla.nombre, falla.boceto, falla.anyo_fundacion, 'PRINCIPAL', artista, falla.id);
         }
+
         if (radioFallaInfantil.checked) {
-            let artista = (falla.artista_i.length != 0) ? `Artista: ${falla.artista_i}` : 'Artista desconocido'; 
+            let artista = (falla.artista_i.length != 0) ? `Artista: ${falla.artista_i}` : 'Artista desconocido';
             contenedor += insertarFalla(falla.nombre, falla.boceto_i, falla.anyo_fundacion_i, 'INFANTIL', artista, falla.id);
         }
-    });
+
+    })
 
     return contenedor;
 }
@@ -118,7 +119,7 @@ const insertarComboBoxFundacion = () => {
     inputHasta.max = inputHasta.value = years.maxYear;
 
     inputDesde.onchange = () => {
-        inputHasta.min = inputHasta.value = inputDesde.value;
+        inputHasta.min = inputDesde.value;
         cargarFallas();
     }
 
@@ -129,10 +130,10 @@ const insertarComboBoxFundacion = () => {
 }
 
 const insertarComboBoxRegiones = (regiones) => {
-    
+
     const comboRegiones = document.querySelector('.comboRegiones');
     let set = new Set();
-    
+
     regiones.forEach(region => set.add(region));
 
     // Ordenar las regiones
@@ -152,20 +153,20 @@ const insertarComboBoxRegiones = (regiones) => {
 const cargarFallas = () => {
 
     const comboSector = document.querySelector('.comboRegiones');
-    let sector        = comboSector.options[comboSector.selectedIndex].value;
+    let sector = comboSector.options[comboSector.selectedIndex].value;
 
     let anyoDesde = document.querySelector('.anyoDesde').value;
     let anyoHasta = document.querySelector('.anyoHasta').value;
 
     let fallaBuscada = document.querySelector('.buscadorFalla').value;
-    fallaBuscada     = fallaBuscada.toLowerCase();
+    fallaBuscada = fallaBuscada.toLowerCase();
 
-    let fallasFiltradas = fallas.filter(falla =>  {
+    let fallasFiltradas = fallas.filter(falla => {
         if (falla.anyo_fundacion && falla.sector) {
-            return ((sector === 'all' || falla.sector === sector) && 
-                    falla.anyo_fundacion >= anyoDesde && 
-                    falla.anyo_fundacion <= anyoHasta &&
-                    falla.nombre.toLowerCase().includes(fallaBuscada));
+            return ((sector === 'all' || falla.sector === sector) &&
+                falla.anyo_fundacion >= anyoDesde &&
+                falla.anyo_fundacion <= anyoHasta &&
+                falla.nombre.toLowerCase().includes(fallaBuscada));
         }
         return false;
     });
@@ -175,13 +176,15 @@ const cargarFallas = () => {
 
     // Obtener que tipo de falla esta seleccionada
     const radioFallaPrincipal = document.querySelector('.radioFallaPrincipal');
-    const radioFallaInfantil  = document.querySelector('.radioFallaInfantil');
+    const radioFallaInfantil = document.querySelector('.radioFallaInfantil');
 
     // Obtener el html generado con toda la info de las fallas
     let htmlFallas = generarHtmlFallas(fallasFiltradas, radioFallaPrincipal, radioFallaInfantil);
 
     // Insertar todo el html generado
     contenedorFallas.innerHTML = htmlFallas;
+
+    starRating.rellenarPuntuacionesFallas();
 
     // Aplicar eventos al boton de abrir ubicación
     document.querySelectorAll('.btnUbicacion').forEach(btn => btn.onclick = () => abrirUbicacion(btn));
@@ -190,7 +193,7 @@ const cargarFallas = () => {
     document.querySelectorAll('.btnVotar').forEach(btn => btn.onclick = () => creacionEventoVotacion(btn));
 
     // Aplicar eventos a las estrellas, votaciones
-    new StarRating().applyEvents();
+    starRating.applyEvents();
 }
 
 const initApplication = (regiones) => {
@@ -203,19 +206,15 @@ const initApplication = (regiones) => {
 
 const obtenerFallas = async () => {
 
-    // Obtener todas las puntuaciones de esta ip
-    puntuaciones = await getAllData();
-    console.log(puntuaciones)
-
     const response = await fetch(URL);
-    const json     = await response.json();
-    
+    const json = await response.json();
+
     // Obtener todas las propiedades del objeto
     fallas = json.features.map(falla => {
         mapFallas.set(falla.properties.id, falla);
         return falla.properties;
     });
-    
+
     const regiones = fallas.map(element => element.sector);
 
     initApplication(regiones);
@@ -223,7 +222,6 @@ const obtenerFallas = async () => {
 
 const URL = "http://mapas.valencia.es/lanzadera/opendata/Monumentos_falleros/JSON";
 let fallas;
-let puntuaciones;
 
 // Almacena => clave: idFalla, valor: ObjetoFalla
 const mapFallas = new Map();
@@ -233,7 +231,7 @@ const contenedorFallas = document.querySelector('#contenedorFallas');
 // Muestra la ubicación en un mapa por geolocalización
 const mapa = new Mapa('myMap');
 
-// Metodos peticiones http
-const httpMethods = new HTTPMethods();
+// Clase con la lógica de las votaciones de las fallas
+const starRating = new StarRating();
 
 window.onload = obtenerFallas;
