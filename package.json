@@ -4,7 +4,7 @@
   "description": "Aplicación para ver las fallas y puntuarlas",
   "main": "server.js",
   "scripts": {
-    "scss": "node-sass --watch scss -o \"public/fallas/css/\"",
+    "scss": "node-sass --watch scss -o \"public/css/\"",
     "dev": "nodemon server.js"
   },
   "repository": {
