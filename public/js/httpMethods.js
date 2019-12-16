@@ -22,7 +22,7 @@ export default class HTTPMethods {
                     throw msg.message;
                 }
             })
-            .catch(err => console.log(err))
+            .catch(err => console.error(err))
     }
 
     async updatePuntuacion(puntuacion, idPuntuacion) {
@@ -40,7 +40,6 @@ export default class HTTPMethods {
         fetch(this.request)
             .then(async (res) => {
                 let json = await res.json();
-                console.log(json);
                 // if (!res.ok) {
                 //     let json = await res.json();
                 //     throw json.message;
@@ -57,11 +56,7 @@ export default class HTTPMethods {
         let urlFormateada = this.url + (urlGet || '');
 
         return fetch(urlFormateada)
-            .then(async (response) => {
-                let json = await response.json();
-                console.log(json);
-                return json;
-            })
+            .then(async (response) => await response.json())
     }
 
     static async getIp() {
