@@ -1,6 +1,5 @@
 
 import Mapa from './mapa.js';
-import HTTPMethods from './httpMethods.js';
 import StarRating from './starRating.js';
 
 const creacionEventoBusqueda = () => {
@@ -220,7 +219,7 @@ const obtenerFallas = async () => {
     initApplication(regiones);
 }
 
-const URL = "http://mapas.valencia.es/lanzadera/opendata/Monumentos_falleros/JSON";
+const URL = 'http://mapas.valencia.es/lanzadera/opendata/Monumentos_falleros/JSON';
 let fallas;
 
 // Almacena => clave: idFalla, valor: ObjetoFalla

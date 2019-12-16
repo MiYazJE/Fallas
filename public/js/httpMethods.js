@@ -2,7 +2,7 @@
 export default class HTTPMethods {
 
     constructor() {
-        this.url = 'https://localhost:3030/puntuaciones/'
+        this.url = window.location + 'puntuaciones/';
     }
     
     async createPuntuacion(puntuacion) {
