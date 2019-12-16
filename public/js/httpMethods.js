@@ -57,7 +57,11 @@ export default class HTTPMethods {
         let urlFormateada = this.url + (urlGet || '');
 
         return fetch(urlFormateada)
-            .then(response => response.json())
+            .then(async (response) => {
+                let json = await response.json();
+                console.log(json);
+                return json;
+            })
     }
 
     static async getIp() {
