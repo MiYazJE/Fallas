@@ -16,8 +16,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 // Test mongodb database
-mongoose.connect(dbConfig.url, {
-        useNewParser: true})
+mongoose.connect(dbConfig.url, {useNewParser: true})
     .then(() => console.log('MongoDb ready to use!'))
     .catch((error) => {
         console.log(error)
@@ -31,4 +30,5 @@ require('./app/routes/puntuaciones.routes.js')(app)
 // Static pages 
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.listen(3030 ,() => console.log('Escuchando en el puerto 3030'))
+app.set('PORT', process.env.PORT || 5000)
+app.listen(3030 ,() => console.log('Escuchando en el puerto ' + app.get('PORT')))
