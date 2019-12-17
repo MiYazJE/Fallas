@@ -60,7 +60,7 @@ const insertarFalla = (nombreFalla, srcFoto, anyoFundada, tipoFalla, artista, id
             <p>${artista}</p>
             <p>Año fundada: ${anyoFundada}</p>
             <p>Falla ${tipoFalla}</p>
-            <button idfalla="${id}" class="btnUbicacion">Ubicación</button>
+            <button idfalla="${id}" title="Ver la ubicación de la falla" class="btnUbicacion">Ubicación</button>
             ${starRating.getHTML(id)}
         </div>`;
 }

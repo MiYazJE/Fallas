@@ -27,10 +27,13 @@ exports.findSome = (req, res) => {
 }
 
 // update puntuacion
-exports.update = (req, res) => {
+exports.updateOne = (req, res) => {
 
     let filter = { _id: req.params.puntuacionId }
     let change = { puntuacion: req.body.puntuacion } 
+
+    console.log(filter)
+    console.log(change)
 
     Puntuacion.updateOne(filter, change)
         .then(status => res.status(200).send(status))
@@ -73,3 +76,30 @@ exports.create = (req, res) => {
             });
         })
 };
+
+exports.findOne = (req, res) => {
+
+    Puntuacion.findOne(req.params)
+        .then(puntuacion => res.status(200).send(puntuacion))
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || "Problems produced..."
+            })
+        })
+
+}
+
+// Delete a puntuationId
+exports.deleteOne = (req, res) => {
+
+    let filter = {
+        _id: req.params.puntuacionId
+    }
+
+    Puntuacion.deleteOne(filter)
+        .then(status => res.status(200).send(status))
+        .catch(err => res.status(500).send({
+                message: err.message || "Problems produced..."
+            }))
+
+} 

@@ -11,16 +11,13 @@ module.exports = (app) => {
     // Retrieve all puntuations with ip 
     app.get('/puntuaciones/:ip', puntuaciones.findSome)
 
-    // Get a puntuation with idFalla and ip
-    app.get('/puntuaciones/:ip/:idFalla', puntuaciones.findSome);
+    // Retrieve a single puntuaciones with puntuacionId
+    app.get('/puntuaciones/:ip/:idFalla', puntuaciones.findOne);
 
     // Update a puntuaciones with puntuacionId
-    app.put('/puntuaciones/:puntuacionId', puntuaciones.update);
-
-    // Retrieve a single puntuaciones with puntuacionId
-    //app.get('/puntuaciones/:puntuacionId', puntuaciones.findOne);
+    app.put('/puntuaciones/:puntuacionId', puntuaciones.updateOne);
 
     // Delete a puntuaciones with puntuacionId
-    //app.delete('/puntuaciones/:puntuacionId', puntuaciones.delete);
+    app.delete('/puntuaciones/:puntuacionId', puntuaciones.deleteOne);
 
 }

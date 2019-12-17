@@ -15,17 +15,12 @@ export default class HTTPMethods {
 
         this.request = new Request(this.url, this.init)
 
-        fetch(this.request) 
-            .then(async (response) => {
-                if (!response.ok) {
-                    let msg = await response.json();
-                    throw msg.message;
-                }
-            })
+        return fetch(this.request) 
+            .then(async (response) => await response.json())
             .catch(err => console.error(err))
     }
 
-    async updatePuntuacion(puntuacion, idPuntuacion) {
+    async updatePuntuacion(puntuacion, puntuacionId) {
 
         this.init = {
             method: 'PUT',
@@ -33,17 +28,14 @@ export default class HTTPMethods {
             body: JSON.stringify(puntuacion)
         }
 
-        let urlPut = this.url + idPuntuacion;
+        let urlPut = this.url + puntuacionId;
 
         this.request = new Request(urlPut, this.init);
 
-        fetch(this.request)
-            .then(async (res) => {
-                let json = await res.json();
-                // if (!res.ok) {
-                //     let json = await res.json();
-                //     throw json.message;
-                // }
+        return fetch(this.request)
+            .then(res => {
+                res.json()
+                    .then(json => json)
             })
             .catch(err => console.error(err))
     }
@@ -52,17 +44,34 @@ export default class HTTPMethods {
      * Recibir las puntuaciones con los parámetros pasados
      */
     async getPuntuaciones(urlGet) {
-        
+
         let urlFormateada = this.url + (urlGet || '');
 
         return fetch(urlFormateada)
-            .then(async (response) => await response.json())
+            .then(response => response)
+            .catch(err => console.error(err))
     }
 
     static async getIp() {
         let data = await fetch('https://api6.ipify.org?format=json');
         let json = await data.json();
         return json.ip;
+    }
+
+    deletePuntuacion(idPuntuacion) {
+
+        this.init = {
+            method: 'DELETE',
+        }
+
+        let urlDelete = this.url + idPuntuacion;
+        let request = new Request(urlDelete, this.init);
+
+        fetch(request)
+            .then(res => res.json())
+            .then(json => json) 
+            .catch(err => console.error(err))
+
     }
 
 }

@@ -30,5 +30,5 @@ require('./app/routes/puntuaciones.routes.js')(app)
 // Static pages 
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.set('PORT', process.env.PORT || 5000)
-app.listen(app.get('PORT') ,() => console.log('Escuchando en el puerto ' + app.get('PORT')))
+let port = process.env.port || 3000;
+app.listen(port,() => console.log('Escuchando en el puerto ' + port))

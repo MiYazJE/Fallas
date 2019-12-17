@@ -180,3 +180,15 @@ main {
     }
   
 }
+
+.wrap-btnEliminarPuntuacion {
+
+    @extend %display-flex-center;
+
+    .btnEliminarPuntuacion {
+        @extend %estilosBotones;
+        display: none;
+    }
+
+}
+
