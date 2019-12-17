@@ -9,7 +9,6 @@ $box-shadow-falla: 4px 8px 12px -1px rgba(0,0,0,0.75);;
 
 %estilosInput {
     border-radius: 5px;
-    outline: 0;
     border: 1px solid black;
     padding: 5px 20px 5px 20px;
     text-align: center;
@@ -42,7 +41,13 @@ $box-shadow-falla: 4px 8px 12px -1px rgba(0,0,0,0.75);;
 
 * {
     @extend %cleanMargins;
-    font-family: 'Montserrat', sans-serif;;
+    outline: none;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(90deg, rgba(42,42,123,1) 0%, rgba(22,17,98,1) 99%);;
 }
 
 input[name="inputFalla"] {
@@ -57,10 +62,19 @@ main {
 
     @extend %display-flex-center;
     flex-direction: column;
-    margin-top: 50px;
+    justify-content: flex-start;
+    padding-top: 2%;
     width: 100%;
-    position: absolute;
-    z-index: 10;
+    background: linear-gradient(90deg, rgba(42,42,123,1) 0%, rgba(22,17,98,1) 99%);
+
+    header {
+        color: #fff;
+        font-size: 20px;
+        margin-bottom: 1%;
+        border-bottom: 1px solid white;
+        width: 50%;
+        text-align: center;
+    }
 
     #form {
 
@@ -73,8 +87,21 @@ main {
         }
     
         .inputsForm {
-            width: 100%;
-            text-align: center;
+
+            width: 90%;
+            padding: 0px 10px;
+            line-height: 2rem;
+            border-radius: 0.4rem;
+            border: 0.4px solid gray;
+
+            &:placeholder {
+                color: #B0BEC5;
+            }
+
+        }
+
+        span {
+            color: #fff;
         }
     
     }
@@ -88,6 +115,7 @@ main {
         .falla {
 
             @extend %display-flex-center;
+            background-color: #fff;
             flex-direction: column;
             padding: 20px;
             box-shadow: $box-shadow-falla;
@@ -128,10 +156,13 @@ main {
 
     #myMap {
         position: absolute;
-        width: 50%;
-        height: 50%;
-        top: 25%;
-        left: 25%;
+        width: 90%;
+        height: 90%;
+        margin: auto;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
     }
 
 }
