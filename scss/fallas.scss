@@ -120,11 +120,12 @@ main {
             padding: 20px;
             box-shadow: $box-shadow-falla;
             margin: 10px;
-            min-width: 200px;
+            width: 250px;
 
             img {
                 width: 250px;
                 height: 300px;
+                border-radius: 5px;
             }
 
             * {
