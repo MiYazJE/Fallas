@@ -70,10 +70,11 @@ main {
       padding: 20px;
       box-shadow: 4px 8px 12px -1px rgba(0, 0, 0, 0.75);
       margin: 10px;
-      min-width: 200px; }
+      width: 250px; }
       main #contenedorFallas .falla img {
         width: 250px;
-        height: 300px; }
+        height: 300px;
+        border-radius: 5px; }
       main #contenedorFallas .falla * {
         margin: 5px; }
 
