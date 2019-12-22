@@ -3,20 +3,20 @@
   margin: 0;
   padding: 0; }
 
-.btnMostrarFallas, main #contenedorFallas .falla .btnUbicacion, .wrap-btnEliminarPuntuacion .btnEliminarPuntuacion, input[name="inputFalla"] {
+.btnMostrarFallas, main #contenedorFallas .falla .btnUbicacion, .btnVerMas, .wrap-btnEliminarPuntuacion .btnEliminarPuntuacion, input[name="inputFalla"] {
   border-radius: 5px;
   border: 1px solid black;
   padding: 5px 20px 5px 20px;
   text-align: center; }
 
-.btnMostrarFallas, main #contenedorFallas .falla .btnUbicacion, .wrap-btnEliminarPuntuacion .btnEliminarPuntuacion {
+.btnMostrarFallas, main #contenedorFallas .falla .btnUbicacion, .btnVerMas, .wrap-btnEliminarPuntuacion .btnEliminarPuntuacion {
   cursor: pointer;
   background-color: lightcoral;
   transition-property: background-color;
   transition-duration: 1s; }
-  .btnMostrarFallas:active, main #contenedorFallas .falla .btnUbicacion:active, .wrap-btnEliminarPuntuacion .btnEliminarPuntuacion:active {
+  .btnMostrarFallas:active, main #contenedorFallas .falla .btnUbicacion:active, .btnVerMas:active, .wrap-btnEliminarPuntuacion .btnEliminarPuntuacion:active {
     transform: translateY(2px); }
-  .btnMostrarFallas:hover, main #contenedorFallas .falla .btnUbicacion:hover, .wrap-btnEliminarPuntuacion .btnEliminarPuntuacion:hover {
+  .btnMostrarFallas:hover, main #contenedorFallas .falla .btnUbicacion:hover, .btnVerMas:hover, .wrap-btnEliminarPuntuacion .btnEliminarPuntuacion:hover {
     background-color: lightsalmon; }
 
 main, main #form, main #contenedorFallas, main #contenedorFallas .falla, .infoFalla, .wrap-btnEliminarPuntuacion {
@@ -76,6 +76,10 @@ main {
         height: 300px; }
       main #contenedorFallas .falla * {
         margin: 5px; }
+
+.btnVerMas {
+  margin: 5%;
+  display: none; }
 
 #contenedorMapa {
   position: fixed;

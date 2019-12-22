@@ -141,6 +141,12 @@ main {
 
 }
 
+.btnVerMas {
+    @extend %estilosBotones;
+    margin: 5%;
+    display: none;
+}
+
 #contenedorMapa {
 
     position: fixed;

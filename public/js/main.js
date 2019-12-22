@@ -2,8 +2,15 @@
 import Mapa from './mapa.js';
 import StarRating from './starRating.js';
 
-const creacionEventoBusqueda = () => {
-    document.querySelector('.buscadorFalla').onchange = cargarFallas;
+const eventoCargarMasFallas = (fallasFiltradas) => {
+    document.querySelector('.btnVerMas').style.display = 'block';
+    document.querySelector('.btnVerMas').onclick = () => {
+        cargarFallas(fallasFiltradas);
+    }
+}
+
+const eventoBusqueda = () => {
+    document.querySelector('.buscadorFalla').onchange = filtrarFallas;
 }
 
 const abrirUbicacion = (btn) => {
@@ -18,14 +25,10 @@ const abrirUbicacion = (btn) => {
     mostrarMapa(contenedorMapa);
 
     // Eliminar la propagacion de eventos desde el mapa
-    document.querySelector('#myMap').onclick = (e) => {
-        e.stopPropagation();
-    }
+    document.querySelector('#myMap').onclick = (e) => e.stopPropagation();
 
     // Mostrar el mapa cuando se haga click sobre el btn Ubicacion
-    contenedorMapa.onclick = () => {
-        esconderMapa(contenedorMapa);
-    }
+    contenedorMapa.onclick = () => esconderMapa(contenedorMapa);
 
     contenedorMapa.onkeydown = (e) => {
         if (e.key === 'Escape') {
@@ -50,13 +53,13 @@ const esconderMapa = async (contenedorMapa) => {
     contenedorMapa.style.zIndex = -1;
 }
 
-const creacionEventosTipoFalla = () => {
+const eventoTipoFalla = () => {
 
     const radioFallaPrincipal = document.querySelector('.radioFallaPrincipal');
     const radioFallaInfantil = document.querySelector('.radioFallaInfantil');
 
-    radioFallaPrincipal.onchange = cargarFallas;
-    radioFallaInfantil.onchange = cargarFallas;
+    radioFallaPrincipal.onchange = filtrarFallas;
+    radioFallaInfantil.onchange = filtrarFallas;
 }
 
 const insertarFalla = (nombreFalla, srcFoto, anyoFundada, tipoFalla, artista, id) => {
@@ -90,11 +93,18 @@ const getMinAndMaxYear = () => {
     return { minYear, maxYear };
 }
 
+const esconderBotonVerMas = () => {
+    document.querySelector('.btnVerMas').style.display = 'none';
+}
+
 const generarHtmlFallas = (fallasFiltradas, radioFallaPrincipal, radioFallaInfantil) => {
 
     let contenedor = '';
+    
+    let index = limiteFallasCargadas;
+    limiteFallasCargadas += 20;
 
-    fallasFiltradas.map(falla => {
+    for (let falla of fallasFiltradas) {
 
         if (radioFallaPrincipal.checked) {
             let artista = (falla.artista.length != 0) ? `Artista: ${falla.artista}` : 'Artista desconocido';
@@ -106,7 +116,16 @@ const generarHtmlFallas = (fallasFiltradas, radioFallaPrincipal, radioFallaInfan
             contenedor += insertarFalla(falla.nombre, falla.boceto_i, falla.anyo_fundacion_i, 'INFANTIL', artista, falla.id);
         }
 
-    })
+        index++;
+        if (index == fallasFiltradas.length) {
+            esconderBotonVerMas();
+            break;
+        }
+        if (index == limiteFallasCargadas) break;
+    }
+
+    fallasFiltradas.splice(0, 20);
+    limiteFallasCargadas += 20;
 
     return contenedor;
 }
@@ -126,10 +145,10 @@ const insertarComboBoxFundacion = () => {
 
     inputDesde.onchange = () => {
         inputHasta.min = inputDesde.value;
-        cargarFallas();
+        filtrarFallas();
     }
 
-    inputHasta.onchange = cargarFallas;
+    inputHasta.onchange = filtrarFallas;
 
     inputDesde.placeholder = `Desde ${years.minYear}`;
     inputHasta.placeholder = `Hasta ${years.maxYear}`;
@@ -153,10 +172,31 @@ const insertarComboBoxRegiones = (regiones) => {
         }
     })
 
-    comboRegiones.onchange = cargarFallas;
+    comboRegiones.onchange = filtrarFallas;
 }
 
-const cargarFallas = () => {
+const cargarFallas = (fallasFiltradas) => {
+
+    // Obtener que tipo de falla esta seleccionada
+    const radioFallaPrincipal = document.querySelector('.radioFallaPrincipal');
+    const radioFallaInfantil = document.querySelector('.radioFallaInfantil');
+
+    // Obtener el html generado con toda la info de las fallas
+    let htmlFallas = generarHtmlFallas(fallasFiltradas, radioFallaPrincipal, radioFallaInfantil);
+
+    // Insertar todo el html generado
+    document.querySelector('#contenedorFallas').innerHTML += htmlFallas;
+
+    starRating.rellenarPuntuacionesFallas();
+
+    // Aplicar eventos al boton de abrir ubicación
+    document.querySelectorAll('.btnUbicacion').forEach(btn => btn.onclick = () => abrirUbicacion(btn));
+
+    // Aplicar eventos a las estrellas, votaciones
+    starRating.applyEvents();
+}
+
+const filtrarFallas = () => {
 
     const comboSector = document.querySelector('.comboRegiones');
     let sector = comboSector.options[comboSector.selectedIndex].value;
@@ -177,37 +217,26 @@ const cargarFallas = () => {
         return false;
     });
 
-    // Ordenar alfabeticamente por nombre de falla
-    fallasFiltradas.sort((falla1, falla2) => falla1.nombre.localeCompare(falla2.nombre));
+    // Al cargar otro filtro reiniciamos las fallas anteriormente mostradas
+    document.querySelector('#contenedorFallas').innerHTML = '';
+    limiteFallasCargadas = 0;
 
-    // Obtener que tipo de falla esta seleccionada
-    const radioFallaPrincipal = document.querySelector('.radioFallaPrincipal');
-    const radioFallaInfantil = document.querySelector('.radioFallaInfantil');
+    if (fallasFiltradas.length > 0) {
 
-    // Obtener el html generado con toda la info de las fallas
-    let htmlFallas = generarHtmlFallas(fallasFiltradas, radioFallaPrincipal, radioFallaInfantil);
+        // Ordenar alfabeticamente por nombre de falla
+        fallasFiltradas.sort((falla1, falla2) => falla1.nombre.localeCompare(falla2.nombre));
+    
+        eventoCargarMasFallas(fallasFiltradas);    
+        cargarFallas(fallasFiltradas);
+    }
 
-    // Insertar todo el html generado
-    contenedorFallas.innerHTML = htmlFallas;
-
-    starRating.rellenarPuntuacionesFallas();
-
-    // Aplicar eventos al boton de abrir ubicación
-    document.querySelectorAll('.btnUbicacion').forEach(btn => btn.onclick = () => abrirUbicacion(btn));
-
-    // Aplicar evento al puntuar una falla
-    document.querySelectorAll('.btnVotar').forEach(btn => btn.onclick = () => creacionEventoVotacion(btn));
-
-    // Aplicar eventos a las estrellas, votaciones
-    starRating.applyEvents();
 }
 
 const initApplication = (regiones) => {
-
     insertarComboBoxRegiones(regiones);
     insertarComboBoxFundacion();
-    creacionEventosTipoFalla();
-    creacionEventoBusqueda();
+    eventoTipoFalla();
+    eventoBusqueda();
 }
 
 const obtenerFallas = async () => {
@@ -228,6 +257,7 @@ const obtenerFallas = async () => {
 
 const URL = 'http://mapas.valencia.es/lanzadera/opendata/Monumentos_falleros/JSON';
 let fallas;
+let limiteFallasCargadas;
 
 // Almacena => clave: idFalla, valor: ObjetoFalla
 const mapFallas = new Map();
