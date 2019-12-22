@@ -114,6 +114,14 @@ main {
 
         .falla {
 
+            @media screen and (max-width: 619px) {
+                width: 70%;
+
+                img {
+                    width: 90%;
+                }
+            }
+
             @extend %display-flex-center;
             background-color: #fff;
             flex-direction: column;
