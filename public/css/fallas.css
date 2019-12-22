@@ -51,6 +51,8 @@ main {
     width: 50%; }
     main #form * {
       margin: 10px; }
+    main #form p {
+      color: #fff; }
     main #form .inputsForm {
       width: 90%;
       padding: 0px 10px;

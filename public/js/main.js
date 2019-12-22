@@ -137,11 +137,11 @@ const insertarComboBoxFundacion = () => {
     const inputDesde = document.querySelector('.anyoDesde');
     const inputHasta = document.querySelector('.anyoHasta');
 
-    inputDesde.min = inputDesde.value = years.minYear;
+    inputDesde.min = years.minYear;
     inputDesde.max = years.maxYear;
 
     inputHasta.min = years.minYear;
-    inputHasta.max = inputHasta.value = years.maxYear;
+    inputHasta.max = years.maxYear;
 
     inputDesde.onchange = () => {
         inputHasta.min = inputDesde.value;
@@ -210,8 +210,8 @@ const filtrarFallas = () => {
     let fallasFiltradas = fallas.filter(falla => {
         if (!falla.anyo_fundacion || !falla.sector) return true;
         return ((sector === 'all' || falla.sector === sector) &&
-            falla.anyo_fundacion >= anyoDesde &&
-            falla.anyo_fundacion <= anyoHasta &&
+            (!anyoDesde || falla.anyo_fundacion >= anyoDesde) &&
+            (!anyoHasta || falla.anyo_fundacion <= anyoHasta) &&
             falla.nombre.toLowerCase().includes(fallaBuscada));
     });
 
