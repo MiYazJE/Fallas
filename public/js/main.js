@@ -9,38 +9,45 @@ const creacionEventoBusqueda = () => {
 const abrirUbicacion = (btn) => {
 
     let idFalla = btn.getAttribute('idFalla');
-    let falla = mapFallas.get(idFalla);
+    let falla   = mapFallas.get(idFalla);
 
     mapa.modificarCoordenadas(falla.geometry.coordinates, falla.properties);
 
     let contenedorMapa = document.querySelector('#contenedorMapa');
 
-    // Mostrar el mapa
-    contenedorMapa.style.zIndex = 20;
-    contenedorMapa.style.opacity = 1;
-
-    // Eliminar scroll
-    document.documentElement.style.overflow = 'hidden';
-    document.body.scroll = 'no';
+    mostrarMapa(contenedorMapa);
 
     // Eliminar la propagacion de eventos desde el mapa
     document.querySelector('#myMap').onclick = (e) => {
         e.stopPropagation();
-    };
-
-    // Mostrar el contenedor cuando se haga click sobre el btn Ubicacion
-    contenedorMapa.onclick = () => {
-        contenedorMapa.style.opacity = 0;
-        document.documentElement.style.overflow = 'auto';
-        document.body.scroll = 'yes';
     }
 
-    // Esconder el contenedor del mapa
-    contenedorMapa.addEventListener('transitionend', () => {
-        if (contenedorMapa.style.opacity === '0')
-            contenedorMapa.style.zIndex = -1;
-    });
+    // Mostrar el mapa cuando se haga click sobre el btn Ubicacion
+    contenedorMapa.onclick = () => {
+        esconderMapa(contenedorMapa);
+    }
 
+    contenedorMapa.onkeydown = (e) => {
+        if (e.key === 'Escape') {
+            esconderMapa(contenedorMapa);
+        }
+    }
+
+}
+
+const mostrarMapa = (contenedorMapa) => {
+    contenedorMapa.style.zIndex = 20;
+    contenedorMapa.style.opacity = 1;
+    document.documentElement.style.overflow = 'hidden';
+    document.body.scroll = 'no';
+}
+
+const esconderMapa = async (contenedorMapa) => {
+    document.documentElement.style.overflow = 'auto';
+    document.body.scroll = 'yes';
+    contenedorMapa.style.opacity = 0;
+    await new Promise(resolve => contenedorMapa.addEventListener('transitionend', resolve))
+    contenedorMapa.style.zIndex = -1;
 }
 
 const creacionEventosTipoFalla = () => {
