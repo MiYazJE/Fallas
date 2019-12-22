@@ -208,13 +208,11 @@ const filtrarFallas = () => {
     fallaBuscada = fallaBuscada.toLowerCase();
 
     let fallasFiltradas = fallas.filter(falla => {
-        if (falla.anyo_fundacion && falla.sector) {
-            return ((sector === 'all' || falla.sector === sector) &&
-                falla.anyo_fundacion >= anyoDesde &&
-                falla.anyo_fundacion <= anyoHasta &&
-                falla.nombre.toLowerCase().includes(fallaBuscada));
-        }
-        return false;
+        if (!falla.anyo_fundacion || !falla.sector) return true;
+        return ((sector === 'all' || falla.sector === sector) &&
+            falla.anyo_fundacion >= anyoDesde &&
+            falla.anyo_fundacion <= anyoHasta &&
+            falla.nombre.toLowerCase().includes(fallaBuscada));
     });
 
     // Al cargar otro filtro reiniciamos las fallas anteriormente mostradas
