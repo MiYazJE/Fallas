@@ -169,7 +169,7 @@ main {
     left: 0;
     background-color: rgba(0,0,0,0.75);
     transition-property: opacity;
-    transition-duration: 1s;
+    transition-duration: .5s;
     opacity: 0;
     z-index: -1;
 
@@ -240,5 +240,29 @@ main {
         display: none;
     }
 
+}
+
+#wrap-btn-scrollTop {
+    
+    position: fixed;
+    right: 3%;
+    bottom: 3%;
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: .5s;
+
+    .btn-scrollTop {
+        transition: .3s ease-in-out;
+        border: none;
+        font-size: 40px;
+        color: white;
+        background-color: transparent;
+
+        &:hover {
+            transform: rotate(360deg);
+        }
+
+    }
+    
 }
 
