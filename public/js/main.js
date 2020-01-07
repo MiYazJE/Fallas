@@ -36,7 +36,9 @@ const eventosFalla = () => {
 
     document.querySelectorAll('.falla').forEach(falla => {
 
-        let btnUbicacion = document.querySelector('.btnUbicacion');
+        console.log(falla);
+
+        let btnUbicacion = falla.querySelector('.btnUbicacion');
         btnUbicacion.onclick = () => mapa.abrirUbicacion(mapFallas, btnUbicacion);
 
         let imagen = falla.querySelector('.fotoFalla');
