@@ -33,4 +33,13 @@ export default class Utils {
         }
     }
 
+    static eventoImagenScale = (contenedor, imagen) => {
+        contenedor.onmouseover = () => {
+            imagen.style.transform = 'scale(1.03)';
+        }
+        contenedor.onmouseleave =() => {
+            imagen.style.transform = 'scale(1)';
+        }
+    }
+
 }

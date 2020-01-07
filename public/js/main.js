@@ -3,6 +3,27 @@ import Mapa from './mapa.js';
 import StarRating from './starRating.js';
 import Utils from './utils.js';
 
+const URL = 'http://mapas.valencia.es/lanzadera/opendata/Monumentos_falleros/JSON';
+const limiteFallasCargadas = 10;
+
+// Almacena => clave: idFalla, valor: ObjetoFalla
+const mapFallas = new Map();
+
+// Muestra la ubicación en un mapa por geolocalización
+const mapa = new Mapa('myMap');
+
+// Clase con la lógica de las votaciones de las fallas
+const starRating = new StarRating();
+
+let fallas;
+let fallasFiltradas;
+
+/* 
+   ***********************************************************
+   *                     FUNCTIONS                           *
+   ***********************************************************
+*/
+
 const eventoCargarMasFallas = () => {
     document.querySelector('.btnVerMas').onclick = cargarFallas;
 }
@@ -11,64 +32,46 @@ const eventoBusqueda = () => {
     document.querySelector('.buscadorFalla').onchange = filtrarFallas;
 }
 
-const abrirUbicacion = (btn) => {
+const eventosFalla = () => {
 
-    let idFalla = btn.getAttribute('idFalla');
-    let falla   = mapFallas.get(idFalla);
+    document.querySelectorAll('.falla').forEach(falla => {
 
-    mapa.modificarCoordenadas(falla.geometry.coordinates, falla.properties);
+        let btnUbicacion = document.querySelector('.btnUbicacion');
+        btnUbicacion.onclick = () => mapa.abrirUbicacion(mapFallas, btnUbicacion);
 
-    let contenedorMapa = document.querySelector('#contenedorMapa');
+        let imagen = falla.querySelector('.fotoFalla');
+        Utils.eventoImagenScale(falla, imagen);
+    })
 
-    mostrarMapa(contenedorMapa);
-
-    // Eliminar la propagacion de eventos desde el mapa
-    document.querySelector('#myMap').onclick = (e) => e.stopPropagation();
-
-    // Mostrar el mapa cuando se haga click sobre el btn Ubicacion
-    contenedorMapa.onclick = () => esconderMapa(contenedorMapa);
-
-    contenedorMapa.onkeydown = (e) => {
-        if (e.key === 'Escape') {
-            esconderMapa(contenedorMapa);
-        }
-    }
-
-}
-
-const mostrarMapa = (contenedorMapa) => {
-    contenedorMapa.style.zIndex = 20;
-    contenedorMapa.style.opacity = 1;
-    document.documentElement.style.overflow = 'hidden';
-    document.body.scroll = 'no';
-}
-
-const esconderMapa = async (contenedorMapa) => {
-    document.documentElement.style.overflow = 'auto';
-    document.body.scroll = 'yes';
-    contenedorMapa.style.opacity = 0;
-    await new Promise(resolve => contenedorMapa.addEventListener('transitionend', resolve))
-    contenedorMapa.style.zIndex = -1;
 }
 
 const eventoTipoFalla = () => {
 
     const radioFallaPrincipal = document.querySelector('.radioFallaPrincipal');
-    const radioFallaInfantil = document.querySelector('.radioFallaInfantil');
+    const radioFallaInfantil  = document.querySelector('.radioFallaInfantil');
 
     radioFallaPrincipal.onchange = filtrarFallas;
-    radioFallaInfantil.onchange = filtrarFallas;
+    radioFallaInfantil.onchange  = filtrarFallas;
 }
 
 const insertarFalla = (nombreFalla, srcFoto, anyoFundada, tipoFalla, artista, id) => {
     return `
         <div class="falla">
             <p class="nombreFalla">${nombreFalla}</p>
-            <img class="fotoFalla" src="${srcFoto}" alt="Foto de la falla ${nombreFalla}">
+            <img 
+                class="fotoFalla" 
+                src="${srcFoto}" 
+                alt="Foto de la falla ${nombreFalla}"
+                title="Imágen de la falla ${nombreFalla}"
+            >
             <p>${artista}</p>
             <p>Año fundada: ${anyoFundada}</p>
             <p>Falla ${tipoFalla}</p>
-            <button idfalla="${id}" title="Ver la ubicación de la falla" class="btnUbicacion">Ubicación</button>
+            <button 
+                idfalla="${id}" 
+                title="Ver la ubicación de la falla" 
+                class="btnUbicacion">Ubicación
+            </button>
             ${starRating.getHTML(id)}
         </div>`;
 }
@@ -177,7 +180,7 @@ const cargarFallas = () => {
     const radioFallaInfantil = document.querySelector('.radioFallaInfantil');
 
     if (!radioFallaInfantil.checked && !radioFallaPrincipal.checked) {
-        esconderBotonVerMas();
+        Utils.esconderBotonVerMas();
         return;
     }
 
@@ -189,8 +192,8 @@ const cargarFallas = () => {
 
     starRating.rellenarPuntuacionesFallas();
 
-    // Aplicar eventos al boton de abrir ubicación
-    document.querySelectorAll('.btnUbicacion').forEach(btn => btn.onclick = () => abrirUbicacion(btn));
+    // Aplicar eventos a las fallas generadas
+    eventosFalla();
 
     // Aplicar eventos a las estrellas, votaciones
     starRating.applyEvents();
@@ -247,21 +250,5 @@ const obtenerFallas = async () => {
 
     initApplication(regiones);
 }
-
-const URL = 'http://mapas.valencia.es/lanzadera/opendata/Monumentos_falleros/JSON';
-let fallas;
-let fallasFiltradas;
-const limiteFallasCargadas = 10;
-
-// Almacena => clave: idFalla, valor: ObjetoFalla
-const mapFallas = new Map();
-
-const contenedorFallas = document.querySelector('#contenedorFallas');
-
-// Muestra la ubicación en un mapa por geolocalización
-const mapa = new Mapa('myMap');
-
-// Clase con la lógica de las votaciones de las fallas
-const starRating = new StarRating();
 
 window.onload = obtenerFallas;

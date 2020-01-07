@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 
-$box-shadow-falla: 4px 8px 12px -1px rgba(0,0,0,0.75);;
+$box-shadow-falla: -2px -1px 23px 0px rgba(255,255,255,1);
 
 %cleanMargins {
     margin: 0;
@@ -118,25 +118,24 @@ main {
 
         .falla {
 
-            @media screen and (max-width: 619px) {
-                width: 70%;
-
-                img {
-                    width: 90%;
-                }
-            }
-
+            transition-property: box-shadow;
+            transition-duration: .3s;
             @extend %display-flex-center;
             background-color: #fff;
             flex-direction: column;
-            padding: 20px;
-            box-shadow: $box-shadow-falla;
+            padding: 10px;
             margin: 10px;
-            width: 250px;
+            width: 350px;
+            height: 510px;
+
+            &:hover {
+                box-shadow: $box-shadow-falla;
+            }
 
             img {
-                width: 250px;
-                height: 300px;
+                transition: transform .3s;
+                width: 200px;
+                height: 250px;
                 border-radius: 5px;
             }
 
@@ -247,9 +246,11 @@ main {
     position: fixed;
     right: 3%;
     bottom: 3%;
-    opacity: 0;
+    opacity: 1;
     transition-property: opacity;
-    transition-duration: .5s;
+    transition-duration: .7s;
+    background-color: lightcoral;
+    border-radius: 20px;
 
     .btn-scrollTop {
         transition: .3s ease-in-out;
@@ -265,4 +266,3 @@ main {
     }
     
 }
-

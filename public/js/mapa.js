@@ -53,4 +53,44 @@ export default class Mapa {
         .bindPopup(infoFalla).openPopup();
     }
 
+    abrirUbicacion = (mapFallas, btnUbicacion) => {
+
+        let idFalla = btnUbicacion.getAttribute('idFalla');
+        let falla   = mapFallas.get(idFalla);
+    
+        this.modificarCoordenadas(falla.geometry.coordinates, falla.properties);
+    
+        let contenedorMapa = document.querySelector('#contenedorMapa');
+    
+        this.mostrarMapa(contenedorMapa);
+    
+        // Eliminar la propagacion de eventos desde el mapa
+        document.querySelector('#myMap').onclick = (e) => e.stopPropagation();
+    
+        // Mostrar el mapa cuando se haga click sobre el btn Ubicacion
+        contenedorMapa.onclick = () => this.esconderMapa(contenedorMapa);
+    
+        contenedorMapa.onkeydown = (e) => {
+            if (e.key === 'Escape') {
+                this.esconderMapa(contenedorMapa);
+            }
+        }
+    
+    }
+    
+    mostrarMapa = (contenedorMapa) => {
+        contenedorMapa.style.zIndex = 20;
+        contenedorMapa.style.opacity = 1;
+        document.documentElement.style.overflow = 'hidden';
+        document.body.scroll = 'no';
+    }
+    
+    esconderMapa = async (contenedorMapa) => {
+        document.documentElement.style.overflow = 'auto';
+        document.body.scroll = 'yes';
+        contenedorMapa.style.opacity = 0;
+        await new Promise(resolve => contenedorMapa.addEventListener('transitionend', resolve))
+        contenedorMapa.style.zIndex = -1;
+    }
+
 }

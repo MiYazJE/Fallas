@@ -67,20 +67,20 @@ main {
     margin-top: 50px;
     width: 100%; }
     main #contenedorFallas .falla {
+      transition-property: box-shadow;
+      transition-duration: .3s;
       background-color: #fff;
       flex-direction: column;
-      padding: 20px;
-      box-shadow: 4px 8px 12px -1px rgba(0, 0, 0, 0.75);
+      padding: 10px;
       margin: 10px;
-      width: 250px; }
-      @media screen and (max-width: 619px) {
-        main #contenedorFallas .falla {
-          width: 70%; }
-          main #contenedorFallas .falla img {
-            width: 90%; } }
+      width: 350px;
+      height: 510px; }
+      main #contenedorFallas .falla:hover {
+        box-shadow: -2px -1px 23px 0px white; }
       main #contenedorFallas .falla img {
-        width: 250px;
-        height: 300px;
+        transition: transform .3s;
+        width: 200px;
+        height: 250px;
         border-radius: 5px; }
       main #contenedorFallas .falla * {
         margin: 5px; }
@@ -141,9 +141,11 @@ main {
   position: fixed;
   right: 3%;
   bottom: 3%;
-  opacity: 0;
+  opacity: 1;
   transition-property: opacity;
-  transition-duration: .5s; }
+  transition-duration: .7s;
+  background-color: lightcoral;
+  border-radius: 20px; }
   #wrap-btn-scrollTop .btn-scrollTop {
     transition: .3s ease-in-out;
     border: none;
