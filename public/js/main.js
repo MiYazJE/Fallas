@@ -1,12 +1,10 @@
 
 import Mapa from './mapa.js';
 import StarRating from './starRating.js';
+import Utils from './utils.js';
 
-const eventoCargarMasFallas = (fallasFiltradas) => {
-    document.querySelector('.btnVerMas').style.display = 'block';
-    document.querySelector('.btnVerMas').onclick = () => {
-        cargarFallas(fallasFiltradas);
-    }
+const eventoCargarMasFallas = () => {
+    document.querySelector('.btnVerMas').onclick = cargarFallas;
 }
 
 const eventoBusqueda = () => {
@@ -93,16 +91,11 @@ const getMinAndMaxYear = () => {
     return { minYear, maxYear };
 }
 
-const esconderBotonVerMas = () => {
-    document.querySelector('.btnVerMas').style.display = 'none';
-}
-
-const generarHtmlFallas = (fallasFiltradas, radioFallaPrincipal, radioFallaInfantil) => {
+const generarHtmlFallas = (radioFallaPrincipal, radioFallaInfantil) => {
 
     let contenedor = '';
     
-    let index = limiteFallasCargadas;
-    limiteFallasCargadas += 20;
+    let index = 0;
 
     for (let falla of fallasFiltradas) {
 
@@ -116,16 +109,18 @@ const generarHtmlFallas = (fallasFiltradas, radioFallaPrincipal, radioFallaInfan
             contenedor += insertarFalla(falla.nombre, falla.boceto_i, falla.anyo_fundacion_i, 'INFANTIL', artista, falla.id);
         }
 
-        index++;
-        if (index == fallasFiltradas.length) {
-            esconderBotonVerMas();
+        // Si no hay mas fallas que mostrar escondemos el boton
+        if (index == fallasFiltradas.length - 1) {
+            Utils.esconderBotonVerMas();
             break;
         }
         if (index == limiteFallasCargadas) break;
+
+        index++;
     }
 
-    fallasFiltradas.splice(0, 20);
-    limiteFallasCargadas += 20;
+    // Eliminamos las fallas mostradas
+    fallasFiltradas.splice(0, limiteFallasCargadas);
 
     return contenedor;
 }
@@ -161,7 +156,7 @@ const insertarComboBoxRegiones = (regiones) => {
 
     regiones.forEach(region => set.add(region));
 
-    // Ordenar las regiones
+    // Ordenar las regiones por orden alfabético
     set = Array.from(set).sort();
 
     set.forEach(region => {
@@ -175,14 +170,19 @@ const insertarComboBoxRegiones = (regiones) => {
     comboRegiones.onchange = filtrarFallas;
 }
 
-const cargarFallas = (fallasFiltradas) => {
+const cargarFallas = () => {
 
     // Obtener que tipo de falla esta seleccionada
     const radioFallaPrincipal = document.querySelector('.radioFallaPrincipal');
     const radioFallaInfantil = document.querySelector('.radioFallaInfantil');
 
+    if (!radioFallaInfantil.checked && !radioFallaPrincipal.checked) {
+        esconderBotonVerMas();
+        return;
+    }
+
     // Obtener el html generado con toda la info de las fallas
-    let htmlFallas = generarHtmlFallas(fallasFiltradas, radioFallaPrincipal, radioFallaInfantil);
+    let htmlFallas = generarHtmlFallas(radioFallaPrincipal, radioFallaInfantil);
 
     // Insertar todo el html generado
     document.querySelector('#contenedorFallas').innerHTML += htmlFallas;
@@ -201,33 +201,26 @@ const filtrarFallas = () => {
     const comboSector = document.querySelector('.comboRegiones');
     let sector = comboSector.options[comboSector.selectedIndex].value;
 
-    let anyoDesde = document.querySelector('.anyoDesde').value;
-    let anyoHasta = document.querySelector('.anyoHasta').value;
+    let anyoDesde = parseInt(document.querySelector('.anyoDesde').value);
+    let anyoHasta = parseInt(document.querySelector('.anyoHasta').value);
 
     let fallaBuscada = document.querySelector('.buscadorFalla').value;
     fallaBuscada = fallaBuscada.toLowerCase();
 
-    let fallasFiltradas = fallas.filter(falla => {
-        if (!falla.anyo_fundacion || !falla.sector) return true;
-        return ((sector === 'all' || falla.sector === sector) &&
-            (!anyoDesde || falla.anyo_fundacion >= anyoDesde) &&
-            (!anyoHasta || falla.anyo_fundacion <= anyoHasta) &&
-            falla.nombre.toLowerCase().includes(fallaBuscada));
+    fallasFiltradas = fallas.filter(falla => {
+        return (sector === 'all' || falla.sector === sector)
+        && ( (isNaN(anyoDesde) && isNaN(anyoHasta)) || 
+             (falla.anyo_fundacion >= anyoDesde && falla.anyo_fundacion <= anyoHasta) )
+        && (!fallaBuscada || falla.nombre.toLowerCase().includes(fallaBuscada));
     });
 
     // Al cargar otro filtro reiniciamos las fallas anteriormente mostradas
     document.querySelector('#contenedorFallas').innerHTML = '';
-    limiteFallasCargadas = 0;
 
-    if (fallasFiltradas.length > 0) {
-
-        // Ordenar alfabeticamente por nombre de falla
-        fallasFiltradas.sort((falla1, falla2) => falla1.nombre.localeCompare(falla2.nombre));
-    
-        eventoCargarMasFallas(fallasFiltradas);    
-        cargarFallas(fallasFiltradas);
-    }
-
+    // Ordenar alfabeticamente por nombre de falla
+    fallasFiltradas.length > 0 ? Utils.mostrarBtnVerMas() : Utils.esconderBotonVerMas();
+    fallasFiltradas.sort((falla1, falla2) => falla1.nombre.localeCompare(falla2.nombre));
+    cargarFallas();
 }
 
 const initApplication = (regiones) => {
@@ -235,6 +228,8 @@ const initApplication = (regiones) => {
     insertarComboBoxFundacion();
     eventoTipoFalla();
     eventoBusqueda();
+    eventoCargarMasFallas();   
+    Utils.eventoScrollTop();
 }
 
 const obtenerFallas = async () => {
@@ -255,7 +250,8 @@ const obtenerFallas = async () => {
 
 const URL = 'http://mapas.valencia.es/lanzadera/opendata/Monumentos_falleros/JSON';
 let fallas;
-let limiteFallasCargadas;
+let fallasFiltradas;
+const limiteFallasCargadas = 10;
 
 // Almacena => clave: idFalla, valor: ObjetoFalla
 const mapFallas = new Map();

@@ -46,7 +46,7 @@ export default class HTTPMethods {
     async getPuntuaciones(urlGet) {
 
         let urlFormateada = this.url + (urlGet || '');
-
+        
         return fetch(urlFormateada)
             .then(response => response)
             .catch(err => console.error(err))

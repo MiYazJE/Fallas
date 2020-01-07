@@ -85,13 +85,13 @@ export default class StarRating {
         else { 
             let json = await this.createPuntuacion(idFalla, value);
             if (json) {
-                this.mostrarBotonEliminar(star.parentElement.parentElement, json._id);
+                this.mostrarBotonEliminar(star.parentElement.parentElement);
             }
         }
 
     }
 
-    mostrarBotonEliminar(contenedor, idPuntuacion) {
+    mostrarBotonEliminar(contenedor) {
 
         let btnEliminarPuntuacion = contenedor.querySelector('.btnEliminarPuntuacion');
         btnEliminarPuntuacion.style.display = 'block';
@@ -103,12 +103,11 @@ export default class StarRating {
 
         this.httpMethods = new HTTPMethods();
 
-        // Obtener a partir de la ip y el id de la falla la idPuntuacion
+        // Obtener el idPuntuacion de una ip y un id de la falla
         let id = event.target.getAttribute('idFalla');
         let ip = await HTTPMethods.getIp();
         let data = await this.httpMethods.getPuntuaciones(ip + '/' + id);
         let json = await data.json();
-
 
         // Eliminar el objeto puntuacion desde la id
         this.httpMethods.deletePuntuacion(json._id);
@@ -125,8 +124,8 @@ export default class StarRating {
     }
 
     /**
-     * Colorea todas las estrellas a su izquierda del color $selected cuando se
-     * hace click sobre una de ellas, las que estan a su derecha del color $normal 
+     * Colorea todas las estrellas a su izquierda del color $selected,
+     * las que estan a su derecha del color $normal 
      */
     paintStars(indice, parentStars) {
 
