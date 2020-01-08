@@ -36,8 +36,6 @@ const eventosFalla = () => {
 
     document.querySelectorAll('.falla').forEach(falla => {
 
-        console.log(falla);
-
         let btnUbicacion = falla.querySelector('.btnUbicacion');
         btnUbicacion.onclick = () => mapa.abrirUbicacion(mapFallas, btnUbicacion);
 
@@ -119,7 +117,7 @@ const generarHtmlFallas = (radioFallaPrincipal, radioFallaInfantil) => {
             Utils.esconderBotonVerMas();
             break;
         }
-        if (index == limiteFallasCargadas) break;
+        if (index == limiteFallasCargadas - 1) break;
 
         index++;
     }
