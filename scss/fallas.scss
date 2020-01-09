@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 
-$empresa: evilcorp;
+$empresa: default;
 
 // ****************************************************
 // *          DEFAULT GLOBAL VARIABLES                *
@@ -12,17 +12,24 @@ $default-shadow-falla: -2px -1px 23px 0px rgba(255,255,255,1);
 $default-border-color-falla: white;
 $border-color-falla: $default-border-color-falla;
 $box-shadow-falla: $default-shadow-falla;
+$color-buttons: black;
 
 @if $empresa == evilcorp {
     $main-background: rgb(153,44,232);
     $button-background: #E8A22C;
     $button-background-hover: #FF4A3D;
     $box-shadow-falla: -2px -1px 23px 0px rgba(251,255,0,1);
-    $border-color-falla: rgb(251,255,0);
+    $border-color-falla: $button-background;
     @import url("evilcorp.css");
 }
-@else if $empresa == starbredCoffe {
-    @import url("starbredCoffe.scss");
+@else if $empresa == starbedCoffe {
+    $main-background: linear-gradient(90deg, rgba(50,89,53,1) 0%, rgba(50,115,55,1) 82%);
+    $button-background: #0D0D0D;
+    $button-background-hover: #325935;
+    $color-buttons: white;
+    $box-shadow-falla: -2px -1px 23px 0px rgba(251,255,0,1);
+    $border-color-falla: $button-background;
+    @import url("starbedCoffe.css");
 }
 
 %cleanMargins {
@@ -31,6 +38,7 @@ $box-shadow-falla: $default-shadow-falla;
 }
 
 %estilosInput {
+    outline: none;
     border-radius: 5px;
     border: 1px solid black;
     padding: 5px 20px 5px 20px;
@@ -41,11 +49,12 @@ $box-shadow-falla: $default-shadow-falla;
 
     @extend %estilosInput;
 
+    border: none;
     cursor: pointer;
-    outline: 0;
     background-color: $button-background;
     transition-property: background-color;
     transition-duration: 1s;
+    color: $color-buttons;
 
     &:active {
         transform: translateY(2px);
@@ -311,4 +320,40 @@ main {
 
     }
     
+}
+
+@media screen and (max-width: 700px) {
+
+    // Hidding
+    main nav {
+        z-index: 1;
+        position: fixed;
+        top: 0;
+        left: 0;
+        transition: transform .4s;
+        height: 100vh;
+        transform: translateX(200%);
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    // Show hamburger icon
+    #icon {
+
+        cursor: pointer;
+        z-index: 10;
+        position: fixed;
+        left: 3%;
+        top: 3%;
+
+        span {
+            display: block;
+            opacity: 1;
+            width: 30px;
+            height: 4px;
+            background-color: white;
+            margin: 6px 0;
+        }
+
+    }
+
 }

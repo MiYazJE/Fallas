@@ -1,6 +1,5 @@
 #icon {
   transition-property: transform, width;
-  transition-duration: .5s;
   content: url("../media/evilcorp.png");
   width: 150px;
   position: absolute;

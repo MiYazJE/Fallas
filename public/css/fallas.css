@@ -1,25 +1,26 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
-@import url("evilcorp.css");
 body {
   margin: 0;
   padding: 0; }
 
 .btnMostrarFallas, main #contenedorFallas .falla .btnUbicacion, .btnVerMas, .wrap-btnEliminarPuntuacion .btnEliminarPuntuacion, input[name="inputFalla"] {
+  outline: none;
   border-radius: 5px;
   border: 1px solid black;
   padding: 5px 20px 5px 20px;
   text-align: center; }
 
 .btnMostrarFallas, main #contenedorFallas .falla .btnUbicacion, .btnVerMas, .wrap-btnEliminarPuntuacion .btnEliminarPuntuacion {
+  border: none;
   cursor: pointer;
-  outline: 0;
-  background-color: #E8A22C;
+  background-color: lightcoral;
   transition-property: background-color;
-  transition-duration: 1s; }
+  transition-duration: 1s;
+  color: black; }
   .btnMostrarFallas:active, main #contenedorFallas .falla .btnUbicacion:active, .btnVerMas:active, .wrap-btnEliminarPuntuacion .btnEliminarPuntuacion:active {
     transform: translateY(2px); }
   .btnMostrarFallas:hover, main #contenedorFallas .falla .btnUbicacion:hover, .btnVerMas:hover, .wrap-btnEliminarPuntuacion .btnEliminarPuntuacion:hover {
-    background-color: #FF4A3D; }
+    background-color: lightsalmon; }
 
 main, main nav, main nav #form, main #contenedorFallas, main #contenedorFallas .falla, .infoFalla, .wrap-btnEliminarPuntuacion {
   display: flex;
@@ -28,12 +29,12 @@ main, main nav, main nav #form, main #contenedorFallas, main #contenedorFallas .
   flex-wrap: wrap; }
 
 .fallaMasVotada {
-  border: 1px solid #fbff00; }
+  border: 1px solid white; }
   .fallaMasVotada:hover {
-    box-shadow: -2px -1px 23px 0px #fbff00; }
+    box-shadow: -2px -1px 23px 0px white; }
 
 body {
-  background: #992ce8;
+  background: linear-gradient(90deg, #2a2a7b 0%, #161162 99%);
   outline: none;
   font-family: 'Montserrat', sans-serif;
   overflow-x: hidden; }
@@ -154,7 +155,7 @@ main #contenedorFallas {
   opacity: 0;
   transition-property: opacity;
   transition-duration: .7s;
-  background-color: #E8A22C;
+  background-color: lightcoral;
   padding: 5px;
   border-radius: 20px; }
   #wrap-btn-scrollTop .btn-scrollTop {
@@ -166,3 +167,27 @@ main #contenedorFallas {
     background-color: transparent; }
     #wrap-btn-scrollTop .btn-scrollTop:hover {
       transform: rotate(360deg); }
+
+@media screen and (max-width: 700px) {
+  main nav {
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: transform .4s;
+    height: 100vh;
+    transform: translateX(200%);
+    background-color: rgba(0, 0, 0, 0.8); }
+  #icon {
+    cursor: pointer;
+    z-index: 10;
+    position: fixed;
+    left: 3%;
+    top: 3%; }
+    #icon span {
+      display: block;
+      opacity: 1;
+      width: 30px;
+      height: 4px;
+      background-color: white;
+      margin: 6px 0; } }

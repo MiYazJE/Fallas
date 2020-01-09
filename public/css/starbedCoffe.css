@@ -1,0 +1,38 @@
+#icon {
+  transition-property: transform, width;
+  transition-duration: .5s;
+  content: url("../media/cthulhu.jpg");
+  width: 150px;
+  position: absolute;
+  left: 3%;
+  top: 3%;
+  cursor: pointer; }
+  #icon #nav-icon span {
+    display: block;
+    opacity: 0;
+    width: 30px;
+    height: 4px;
+    background-color: white;
+    margin: 6px 0; }
+
+main nav {
+  transform: translateX(0%); }
+
+@media screen and (max-width: 700px) {
+  main nav {
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: transform .4s;
+    height: 100vh;
+    transform: translateX(200%);
+    background-color: rgba(0, 0, 0, 0.8); }
+  #logo {
+    display: none; }
+  #icon {
+    content: '';
+    z-index: 10;
+    position: fixed; }
+  #icon #nav-icon span {
+    opacity: 1; } }
