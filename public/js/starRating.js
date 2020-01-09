@@ -42,7 +42,15 @@ export default class StarRating {
 
         puntuaciones.forEach(puntuacion => {
             if (mapContenedoresFallas.has(puntuacion.idFalla)) {
+                
                 let falla = mapContenedoresFallas.get(puntuacion.idFalla);
+
+                // Cambiar los estilos a las fallas que superen un 3 de nota
+                if (parseInt(puntuacion.puntuacion) >= 4) {
+                    falla.classList.remove('fallaNormal');
+                    falla.classList.add('fallaMasVotada');
+                }
+
                 let stars = falla.querySelector('.star-rating').children;
                 this.mostrarBotonEliminar(falla, puntuacion._id);
                 this.paintStars(puntuacion.puntuacion, stars);

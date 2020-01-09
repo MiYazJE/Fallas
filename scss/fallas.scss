@@ -1,6 +1,29 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 
-$box-shadow-falla: -2px -1px 23px 0px rgba(255,255,255,1);
+$empresa: evilcorp;
+
+// ****************************************************
+// *          DEFAULT GLOBAL VARIABLES                *
+// ****************************************************
+$main-background: linear-gradient(90deg, rgba(42,42,123,1) 0%, rgba(22,17,98,1) 99%);
+$button-background: lightcoral;
+$button-background-hover: lightsalmon;
+$default-shadow-falla: -2px -1px 23px 0px rgba(255,255,255,1);
+$default-border-color-falla: white;
+$border-color-falla: $default-border-color-falla;
+$box-shadow-falla: $default-shadow-falla;
+
+@if $empresa == evilcorp {
+    $main-background: rgb(153,44,232);
+    $button-background: #E8A22C;
+    $button-background-hover: #FF4A3D;
+    $box-shadow-falla: -2px -1px 23px 0px rgba(251,255,0,1);
+    $border-color-falla: rgb(251,255,0);
+    @import url("evilcorp.css");
+}
+@else if $empresa == starbredCoffe {
+    @import url("starbredCoffe.scss");
+}
 
 %cleanMargins {
     margin: 0;
@@ -19,7 +42,8 @@ $box-shadow-falla: -2px -1px 23px 0px rgba(255,255,255,1);
     @extend %estilosInput;
 
     cursor: pointer;
-    background-color: lightcoral;
+    outline: 0;
+    background-color: $button-background;
     transition-property: background-color;
     transition-duration: 1s;
 
@@ -28,7 +52,7 @@ $box-shadow-falla: -2px -1px 23px 0px rgba(255,255,255,1);
     }
 
     &:hover {
-        background-color: lightsalmon;
+        background-color: $button-background-hover;
     }
 }
 
@@ -39,15 +63,20 @@ $box-shadow-falla: -2px -1px 23px 0px rgba(255,255,255,1);
     flex-wrap: wrap;
 }
 
-* {
-    @extend %cleanMargins;
-    outline: none;
-    font-family: 'Montserrat', sans-serif;
+%style-fallaBienVotada {
+    border: 1px solid $border-color-falla;
+    
+    &:hover {
+        box-shadow: $box-shadow-falla;
+    }
 }
 
 body {
-    height: 100vh;
-    background: linear-gradient(90deg, rgba(42,42,123,1) 0%, rgba(22,17,98,1) 99%);;
+    @extend %cleanMargins;
+    background: $main-background;
+    outline: none;
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
 }
 
 input[name="inputFalla"] {
@@ -61,57 +90,63 @@ input[name="inputFalla"] {
 main {
 
     @extend %display-flex-center;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding-top: 2%;
-    width: 100%;
-    background: linear-gradient(90deg, rgba(42,42,123,1) 0%, rgba(22,17,98,1) 99%);
 
-    header {
-        color: #fff;
-        font-size: 20px;
-        margin-bottom: 1%;
-        border-bottom: 1px solid white;
-        width: 50%;
-        text-align: center;
-    }
-
-    #form {
+    nav {
 
         @extend %display-flex-center;
         flex-direction: column;
-        width: 50%;
-        
-        * {
-            margin: 10px;
+        justify-content: flex-start;
+        padding-top: 2%;
+        width: 100%;
+
+        header {
+            color: #fff;
+            font-size: 20px;
+            margin-bottom: 1%;
+            border-bottom: 1px solid white;
+            width: 50%;
+            text-align: center;
         }
     
-        p {
-            color: #fff;
-        }
-
-        .inputsForm {
-
-            width: 90%;
-            padding: 0px 10px;
-            line-height: 2rem;
-            border-radius: 0.4rem;
-            border: 0.4px solid gray;
-
-            &:placeholder {
-                color: #B0BEC5;
+        #form {
+    
+            @extend %display-flex-center;
+            flex-direction: column;
+            width: 50%;
+            
+            * {
+                margin: 10px;
             }
-
-        }
-
-        span {
-            color: #fff;
-        }
+        
+            p {
+                color: #fff;
+            }
     
+            .inputsForm {
+    
+                width: 90%;
+                padding: 0px 10px;
+                line-height: 2rem;
+                border-radius: 0.4rem;
+                border: 0.4px solid gray;
+                outline: none;
+    
+                &:placeholder {
+                    color: #B0BEC5;
+                }
+    
+            }
+    
+            span {
+                color: #fff;
+            }
+        
+        }
+
     }
 
     #contenedorFallas {
-
+    
         @extend %display-flex-center;
         margin-top: 50px;
         width: 100%;
@@ -123,14 +158,11 @@ main {
             @extend %display-flex-center;
             background-color: #fff;
             flex-direction: column;
+            border-radius: 2px;
             padding: 10px;
             margin: 10px;
             width: 350px;
             height: 510px;
-
-            &:hover {
-                box-shadow: $box-shadow-falla;
-            }
 
             img {
                 transition: transform .3s;
@@ -197,6 +229,18 @@ main {
 
 }
 
+.fallaNormal {
+    border: 1px solid $default-border-color-falla;
+
+    &:hover {
+        box-shadow: $default-shadow-falla;
+    }
+}
+
+.fallaMasVotada {
+    @extend %style-fallaBienVotada;
+}
+
 .star-rating {
 
     $selected: #F39C12;
@@ -249,12 +293,13 @@ main {
     opacity: 0;
     transition-property: opacity;
     transition-duration: .7s;
-    background-color: lightcoral;
+    background-color: $button-background;
     padding: 5px;
     border-radius: 20px;
 
     .btn-scrollTop {
         transition: .3s ease-in-out;
+        outline: none;
         border: none;
         font-size: 40px;
         color: white;

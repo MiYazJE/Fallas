@@ -56,7 +56,7 @@ const eventoTipoFalla = () => {
 
 const insertarFalla = (nombreFalla, srcFoto, anyoFundada, tipoFalla, artista, id) => {
     return `
-        <div class="falla">
+        <div class="falla fallaNormal">
             <p class="nombreFalla">${nombreFalla}</p>
             <img 
                 class="fotoFalla" 
@@ -233,6 +233,7 @@ const initApplication = (regiones) => {
     eventoBusqueda();
     eventoCargarMasFallas();   
     Utils.eventoScrollTop();
+    Utils.eventoMostrarMenu();
 }
 
 const obtenerFallas = async () => {

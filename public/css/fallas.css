@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
-* {
+@import url("evilcorp.css");
+body {
   margin: 0;
   padding: 0; }
 
@@ -11,79 +12,83 @@
 
 .btnMostrarFallas, main #contenedorFallas .falla .btnUbicacion, .btnVerMas, .wrap-btnEliminarPuntuacion .btnEliminarPuntuacion {
   cursor: pointer;
-  background-color: lightcoral;
+  outline: 0;
+  background-color: #E8A22C;
   transition-property: background-color;
   transition-duration: 1s; }
   .btnMostrarFallas:active, main #contenedorFallas .falla .btnUbicacion:active, .btnVerMas:active, .wrap-btnEliminarPuntuacion .btnEliminarPuntuacion:active {
     transform: translateY(2px); }
   .btnMostrarFallas:hover, main #contenedorFallas .falla .btnUbicacion:hover, .btnVerMas:hover, .wrap-btnEliminarPuntuacion .btnEliminarPuntuacion:hover {
-    background-color: lightsalmon; }
+    background-color: #FF4A3D; }
 
-main, main #form, main #contenedorFallas, main #contenedorFallas .falla, .infoFalla, .wrap-btnEliminarPuntuacion {
+main, main nav, main nav #form, main #contenedorFallas, main #contenedorFallas .falla, .infoFalla, .wrap-btnEliminarPuntuacion {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap; }
 
-* {
-  outline: none;
-  font-family: 'Montserrat', sans-serif; }
+.fallaMasVotada {
+  border: 1px solid #fbff00; }
+  .fallaMasVotada:hover {
+    box-shadow: -2px -1px 23px 0px #fbff00; }
 
 body {
-  height: 100vh;
-  background: linear-gradient(90deg, #2a2a7b 0%, #161162 99%); }
+  background: #992ce8;
+  outline: none;
+  font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden; }
 
-main {
+main nav {
   flex-direction: column;
   justify-content: flex-start;
   padding-top: 2%;
-  width: 100%;
-  background: linear-gradient(90deg, #2a2a7b 0%, #161162 99%); }
-  main header {
+  width: 100%; }
+  main nav header {
     color: #fff;
     font-size: 20px;
     margin-bottom: 1%;
     border-bottom: 1px solid white;
     width: 50%;
     text-align: center; }
-  main #form {
+  main nav #form {
     flex-direction: column;
     width: 50%; }
-    main #form * {
+    main nav #form * {
       margin: 10px; }
-    main #form p {
+    main nav #form p {
       color: #fff; }
-    main #form .inputsForm {
+    main nav #form .inputsForm {
       width: 90%;
       padding: 0px 10px;
       line-height: 2rem;
       border-radius: 0.4rem;
-      border: 0.4px solid gray; }
-      main #form .inputsForm:placeholder {
+      border: 0.4px solid gray;
+      outline: none; }
+      main nav #form .inputsForm:placeholder {
         color: #B0BEC5; }
-    main #form span {
+    main nav #form span {
       color: #fff; }
-  main #contenedorFallas {
-    margin-top: 50px;
-    width: 100%; }
-    main #contenedorFallas .falla {
-      transition-property: box-shadow;
-      transition-duration: .3s;
-      background-color: #fff;
-      flex-direction: column;
-      padding: 10px;
-      margin: 10px;
-      width: 350px;
-      height: 510px; }
-      main #contenedorFallas .falla:hover {
-        box-shadow: -2px -1px 23px 0px white; }
-      main #contenedorFallas .falla img {
-        transition: transform .3s;
-        width: 200px;
-        height: 250px;
-        border-radius: 5px; }
-      main #contenedorFallas .falla * {
-        margin: 5px; }
+
+main #contenedorFallas {
+  margin-top: 50px;
+  width: 100%; }
+  main #contenedorFallas .falla {
+    transition-property: box-shadow;
+    transition-duration: .3s;
+    background-color: #fff;
+    flex-direction: column;
+    border-radius: 2px;
+    padding: 10px;
+    margin: 10px;
+    width: 350px;
+    height: 510px; }
+    main #contenedorFallas .falla img {
+      transition: transform .3s;
+      width: 200px;
+      height: 250px;
+      border-radius: 5px; }
+    main #contenedorFallas .falla * {
+      margin: 5px; }
 
 .btnVerMas {
   margin: 5%;
@@ -116,6 +121,11 @@ main {
     width: 50px;
     height: 50px; }
 
+.fallaNormal {
+  border: 1px solid white; }
+  .fallaNormal:hover {
+    box-shadow: -2px -1px 23px 0px white; }
+
 .star-rating {
   display: inline-block; }
   .star-rating span {
@@ -144,11 +154,12 @@ main {
   opacity: 0;
   transition-property: opacity;
   transition-duration: .7s;
-  background-color: lightcoral;
+  background-color: #E8A22C;
   padding: 5px;
   border-radius: 20px; }
   #wrap-btn-scrollTop .btn-scrollTop {
     transition: .3s ease-in-out;
+    outline: none;
     border: none;
     font-size: 40px;
     color: white;
