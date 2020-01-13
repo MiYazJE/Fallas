@@ -73,8 +73,7 @@ export default class Utils {
                 body.style.overflowY = 'auto';  
             }
             else {
-                nav.style.transform = 'translateX(200%)';
-                this.mostrar = true;
+                this.mostrar = false;
             }
         }
     }
