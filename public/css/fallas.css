@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+@import url("evilcorp.css");
 body {
   margin: 0;
   padding: 0; }
@@ -13,14 +14,14 @@ body {
 .btnMostrarFallas, main #contenedorFallas .falla .btnUbicacion, .btnVerMas, .wrap-btnEliminarPuntuacion .btnEliminarPuntuacion {
   border: none;
   cursor: pointer;
-  background-color: lightcoral;
+  background-color: #E8A22C;
   transition-property: background-color;
   transition-duration: 1s;
   color: black; }
   .btnMostrarFallas:active, main #contenedorFallas .falla .btnUbicacion:active, .btnVerMas:active, .wrap-btnEliminarPuntuacion .btnEliminarPuntuacion:active {
     transform: translateY(2px); }
   .btnMostrarFallas:hover, main #contenedorFallas .falla .btnUbicacion:hover, .btnVerMas:hover, .wrap-btnEliminarPuntuacion .btnEliminarPuntuacion:hover {
-    background-color: lightsalmon; }
+    background-color: #FF4A3D; }
 
 main, main nav, main nav #form, main #contenedorFallas, main #contenedorFallas .falla, .infoFalla, .wrap-btnEliminarPuntuacion {
   display: flex;
@@ -29,12 +30,12 @@ main, main nav, main nav #form, main #contenedorFallas, main #contenedorFallas .
   flex-wrap: wrap; }
 
 .fallaMasVotada {
-  border: 1px solid white; }
+  border: 1px solid #E8A22C; }
   .fallaMasVotada:hover {
-    box-shadow: -2px -1px 23px 0px white; }
+    box-shadow: -2px -1px 23px 0px #fbff00; }
 
 body {
-  background: linear-gradient(90deg, #2a2a7b 0%, #161162 99%);
+  background: #992ce8;
   outline: none;
   font-family: 'Montserrat', sans-serif;
   overflow-x: hidden; }
@@ -155,7 +156,7 @@ main #contenedorFallas {
   opacity: 0;
   transition-property: opacity;
   transition-duration: .7s;
-  background-color: lightcoral;
+  background-color: #E8A22C;
   padding: 5px;
   border-radius: 20px; }
   #wrap-btn-scrollTop .btn-scrollTop {
